@@ -1,39 +1,38 @@
 #import<stdio.h>
 #define MAX 5
-int stack[MAX];
-int top=-1;
 
-void push(int value)
+
+void push(int stack[], int *top, int value)
 {
-  if (top==MAX-1)
+  if (*top==MAX-1)
   {
     printf("Stack overflow. Cannot push %d onto the stack\n", value);
    
   }
   else
   {
-    top++;
-    stack[top]=value;
+    (*top)++;
+    stack[*top]=value;
     printf("The value %d has been pushed onto the stack\n", value);
    
   }
  
 }
 
-int pop()
+int pop(int stack[], int *top)
 {
-  if (top==-1)
+  if (*top==-1)
   {
     printf("Stack underflow. Cannot pop from an empty stack\n");
   return -1;
   }
   else{
-    return stack[top--];
+    return stack[*top--];
    
   }
 }
 
-void display()
+void display(int stack[], int top)
 {
   if (top==-1)
   {
@@ -50,6 +49,8 @@ void display()
 
 int main()
 {
+  int stack[MAX];
+  int top=-1;
   int choice, value;
   do{
     printf("Stack menu\n");
@@ -67,15 +68,15 @@ int main()
         case 1:
         printf("Enter value to be pushed:");
         scanf("%d", &value);
-        push(value);
+        push(stack, &top, value);
         break;
         case 2:
-        value=pop();
+        value=pop(stack, &top);
         if (value!=-1)
           printf("%d value popped from the stack\n", value);
         break;
         case 3:
-        display();
+        display(stack, top);
         break;
         case 4:
         printf("Exiting the program");
